@@ -1,0 +1,189 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Registro de Clientes - SEGOVI</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+            margin: 0;
+            color: #222;
+        }
+
+        header {
+            background: #174a78;
+            color: white;
+            text-align: center;
+            padding: 25px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 25px;
+        }
+
+        .contenedor {
+            max-width: 650px;
+            margin: 40px auto;
+            padding: 0 15px;
+        }
+
+        .formulario {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px #ddd;
+        }
+
+        h2 {
+            color: #174a78;
+            margin-top: 0;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 7px;
+            font-weight: bold;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 15px;
+        }
+
+        .botones {
+            display: flex;
+            gap: 10px;
+            margin-top: 25px;
+        }
+
+        button, .cancelar {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 15px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        button {
+            background: #1976d2;
+            color: white;
+        }
+
+        button:disabled {
+            background: #999;
+            cursor: not-allowed;
+        }
+
+        .cancelar {
+            background: #777;
+            color: white;
+        }
+
+        .aviso {
+            background: #fff3cd;
+            color: #664d03;
+            padding: 12px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>CORPORACION INDUSTRIAL SEGOVI EIRL</h1>
+    <p>Sistema de Gestion de Ventas Mayoristas</p>
+    <p>Vidrio y Aluminio</p>
+</header>
+
+<div class="contenedor">
+    <div class="formulario">
+
+        <h2>
+            <%= cliente ? 'Editar Cliente' : 'Registrar Cliente Mayorista' %>
+        </h2>
+
+        <% if (asesores.length === 0) { %>
+            <div class="aviso">
+                Primero debes registrar un asesor comercial
+                en la base de datos.
+            </div>
+        <% } %>
+
+        <form method="POST"
+              action="<%= cliente
+                  ? '/clientes/' + cliente.id_cliente + '/actualizar'
+                  : '/clientes/guardar' %>">
+
+            <label>Razon Social *</label>
+            <input type="text"
+                   name="razon_social"
+                   value="<%= cliente ? cliente.razon_social : '' %>"
+                   placeholder="Nombre de la empresa o negocio"
+                   maxlength="150"
+                   required>
+
+            <label>RUC o DNI *</label>
+            <input type="text"
+                   name="ruc_dni"
+                   value="<%= cliente ? cliente.ruc_dni : '' %>"
+                   placeholder="Ingrese RUC o DNI"
+                   maxlength="20"
+                   required>
+
+            <label>Numero de Celular</label>
+            <input type="tel"
+                   name="celular"
+                   value="<%= cliente ? (cliente.celular || '') : '' %>"
+                   placeholder="Ingrese numero de celular"
+                   maxlength="20">
+
+            <label>Asesor Comercial *</label>
+            <select name="id_asesor" required>
+                <option value="">Seleccione un asesor</option>
+
+                <% asesores.forEach(asesor => { %>
+                    <option
+                        value="<%= asesor.id_asesor %>"
+                        <%= cliente &&
+                            cliente.id_asesor === asesor.id_asesor
+                            ? 'selected' : '' %>>
+                        <%= asesor.nombre %>
+                    </option>
+                <% }) %>
+            </select>
+
+            <div class="botones">
+                <button type="submit"
+                        <%= asesores.length === 0 ? 'disabled' : '' %>>
+                    <%= cliente ? 'Actualizar' : 'Guardar Cliente' %>
+                </button>
+
+                <a href="/clientes" class="cancelar">
+                    Cancelar
+                </a>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

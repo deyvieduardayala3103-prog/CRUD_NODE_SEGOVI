@@ -1,0 +1,135 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Detalles del Cliente - SEGOVI</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #f4f6f9;
+            color: #222;
+        }
+
+        header {
+            background: #174a78;
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 25px;
+        }
+
+        .contenedor {
+            max-width: 750px;
+            margin: 40px auto;
+            padding: 15px;
+        }
+
+        .panel {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px #ddd;
+        }
+
+        h2 {
+            color: #174a78;
+        }
+
+        .dato {
+            padding: 15px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .dato strong {
+            display: block;
+            color: #555;
+            margin-bottom: 7px;
+        }
+
+        .botones {
+            display: flex;
+            gap: 10px;
+            margin-top: 25px;
+        }
+
+        .boton {
+            padding: 12px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            color: white;
+            background: #1976d2;
+        }
+
+        .editar {
+            background: #e69a16;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>CORPORACION INDUSTRIAL SEGOVI EIRL</h1>
+    <p>Sistema de Gestion de Ventas Mayoristas</p>
+    <p>Vidrio y Aluminio</p>
+</header>
+
+<div class="contenedor">
+    <div class="panel">
+
+        <h2>Detalles del Cliente Mayorista</h2>
+
+        <div class="dato">
+            <strong>Codigo del Cliente:</strong>
+            <%= cliente.id_cliente %>
+        </div>
+
+        <div class="dato">
+            <strong>Razon Social:</strong>
+            <%= cliente.razon_social %>
+        </div>
+
+        <div class="dato">
+            <strong>RUC / DNI:</strong>
+            <%= cliente.ruc_dni %>
+        </div>
+
+        <div class="dato">
+            <strong>Numero de Celular:</strong>
+            <%= cliente.celular || 'No registrado' %>
+        </div>
+
+        <div class="dato">
+            <strong>Asesor Comercial:</strong>
+            <%= cliente.asesor %>
+        </div>
+
+        <div class="botones">
+            <a href="/clientes" class="boton">
+                Volver
+            </a>
+
+            <a href="/clientes/<%= cliente.id_cliente %>/editar"
+               class="boton editar">
+                Editar Cliente
+            </a>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

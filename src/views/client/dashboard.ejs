@@ -1,0 +1,194 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Clientes Mayoristas - SEGOVI</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #f4f6f9;
+            color: #222;
+        }
+
+        header {
+            background: #174a78;
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 25px;
+        }
+
+        .contenedor {
+            max-width: 1100px;
+            margin: 35px auto;
+            padding: 20px;
+        }
+
+        .panel {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px #ddd;
+        }
+
+        .barra {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .boton {
+            background: #1976d2;
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: inline-block;
+            font-size: 14px;
+        }
+
+        .editar {
+            background: #e69a16;
+        }
+
+        .eliminar {
+            background: #c62828;
+        }
+
+        .tabla-contenedor {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background: #174a78;
+            color: white;
+        }
+
+        .acciones {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .acciones form {
+            margin: 0;
+        }
+
+        .vacio {
+            text-align: center;
+            padding: 25px;
+            color: #666;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>CORPORACION INDUSTRIAL SEGOVI EIRL</h1>
+    <p>Sistema de Gestion de Ventas Mayoristas</p>
+    <p>Vidrio y Aluminio</p>
+</header>
+
+<div class="contenedor">
+    <div class="panel">
+
+        <div class="barra">
+            <h2>Gestion de Clientes Mayoristas</h2>
+            <a href="/clientes/nuevo" class="boton">
+                + Registrar Cliente
+            </a>
+        </div>
+
+        <div class="tabla-contenedor">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Razon Social</th>
+                        <th>RUC / DNI</th>
+                        <th>Celular</th>
+                        <th>Asesor</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <% if (clientes.length === 0) { %>
+                        <tr>
+                            <td colspan="6" class="vacio">
+                                No hay clientes registrados.
+                            </td>
+                        </tr>
+                    <% } else { %>
+                        <% clientes.forEach(cliente => { %>
+                            <tr>
+                                <td><%= cliente.id_cliente %></td>
+                                <td><%= cliente.razon_social %></td>
+                                <td><%= cliente.ruc_dni %></td>
+                                <td><%= cliente.celular || '-' %></td>
+                                <td><%= cliente.asesor %></td>
+                                <td>
+                                    <div class="acciones">
+                                        <a class="boton"
+                                           href="/clientes/<%= cliente.id_cliente %>">
+                                           Ver
+                                        </a>
+
+                                        <a class="boton editar"
+                                           href="/clientes/<%= cliente.id_cliente %>/editar">
+                                           Editar
+                                        </a>
+
+                                        <form method="POST"
+                                              action="/clientes/<%= cliente.id_cliente %>/eliminar"
+                                              onsubmit="return confirm('¿Eliminar este cliente?')">
+                                            <button class="boton eliminar"
+                                                    type="submit">
+                                                Eliminar
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        <% }) %>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>
